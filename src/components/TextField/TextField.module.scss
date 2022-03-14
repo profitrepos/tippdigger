@@ -1,0 +1,61 @@
+.input_box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  cursor: text;
+  width: 100%;
+  margin-bottom: 20px;
+  input {
+    flex: 1 1 auto;
+    outline: none;
+    padding: 0.92em 0.5em 0.92em 1.1em;
+    z-index: 2;
+    background: transparent;
+    line-height: 1em;
+    &::placeholder {
+      color: #ababab;
+    }
+  }
+  input:focus + fieldset {
+    border-color: #2ea448;
+  }
+}
+
+input[type="password"] {
+  font-family: Verdana;
+  letter-spacing: 0.125em;
+}
+
+.icon_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  margin-right: 1em;
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity 0.2s ease-in;
+  &:hover {
+    opacity: 0.5;
+  }
+  &:focus {
+    outline: 1px solid #ababab;
+  }
+}
+
+.fieldset {
+  border: 1px solid #c7d5e4;
+  border-radius: 8px;
+  position: absolute;
+  left: 0;
+  top: -5px;
+  right: 0;
+  bottom: 0;
+}
+.legend {
+  padding: 0px 4px;
+  font-size: 13px;
+  line-height: 14px;
+  color: #525252;
+}

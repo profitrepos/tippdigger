@@ -1,0 +1,26 @@
+@mixin font($font_name, $file_name, $weight, $style) {
+  @font-face {
+    font-family: $font_name;
+    font-display: swap;
+    src: url("../assets/fonts/#{$file_name}.woff") format("woff"),
+      url("../assets/fonts/#{$file_name}.woff2") format("woff2");
+    font-weight: #{$weight};
+    font-style: #{$style};
+  }
+}
+
+@import "fonts.scss";
+@import "colors.scss";
+@import "normalize.scss";
+
+html,
+body {
+  font-family: "SFProDisplay", sans-serif;
+  color: $main;
+  font-size: 16px;
+  padding: 50px;
+}
+
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
