@@ -1,4 +1,5 @@
 import React, {
+  ChangeEvent,
   DetailedHTMLProps,
   FC,
   HTMLAttributes,
@@ -6,6 +7,7 @@ import React, {
   useState,
 } from "react";
 import cn from "classnames";
+import MaskInput from "react-maskinput";
 
 import styles from "./TextField.module.scss";
 import { ReactComponent as ClearIcon } from "./icons/clear.svg";
@@ -16,16 +18,17 @@ interface TextFieldProps
     HTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  rightIcon?: JSX.Element;
+  legend: string;
+
   type?: HTMLInputTypeAttribute;
   maxlength?: number;
   placeholder?: string;
-  legend: string;
+  masked?: boolean;
+  mask?: string;
 }
 
 export const TextField: FC<TextFieldProps> = ({
   className,
-  rightIcon,
   type = "text",
   placeholder,
   legend,
@@ -67,6 +70,38 @@ export const TextField: FC<TextFieldProps> = ({
           <ClearIcon />
         </button>
       )}
+    </div>
+  );
+};
+
+export const MaskedTextField: FC<TextFieldProps> = ({
+  className,
+  legend,
+  placeholder,
+  mask,
+  type,
+  masked,
+  ...props
+}) => {
+  const clearInput = () => {
+    console.log("clearInput");
+  };
+
+  return (
+    <div className={cn(styles.input_box, className)}>
+      <MaskInput
+        mask={mask}
+        maskChar="_"
+        //@ts-ignore
+        placeholder={placeholder}
+        {...props}
+      />
+      <fieldset className={styles.fieldset}>
+        <legend className={styles.legend}>{legend}</legend>
+      </fieldset>
+      <button onClick={clearInput} className={styles.icon_btn}>
+        <ClearIcon />
+      </button>
     </div>
   );
 };

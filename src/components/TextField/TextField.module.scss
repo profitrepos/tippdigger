@@ -5,14 +5,14 @@
   position: relative;
   cursor: text;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   input {
     flex: 1 1 auto;
     outline: none;
-    padding: 0.92em 0.5em 0.92em 1.1em;
+    padding: 0.92rem 0.5rem 0.92rem 1.1rem;
     z-index: 2;
     background: transparent;
-    line-height: 1em;
+    line-height: 1rem;
     &::placeholder {
       color: #ababab;
     }
@@ -24,7 +24,7 @@
 
 input[type="password"] {
   font-family: Verdana;
-  letter-spacing: 0.125em;
+  letter-spacing: 0.125rem;
 }
 
 .icon_btn {
@@ -32,21 +32,21 @@ input[type="password"] {
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  margin-right: 1em;
+  margin-right: 1rem;
   cursor: pointer;
   z-index: 2;
   transition: opacity 0.2s ease-in;
   &:hover {
     opacity: 0.5;
   }
-  &:focus {
+  &:focus-visible {
     outline: 1px solid #ababab;
   }
 }
 
 .fieldset {
   border: 1px solid #c7d5e4;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   position: absolute;
   left: 0;
   top: -5px;
@@ -54,8 +54,8 @@ input[type="password"] {
   bottom: 0;
 }
 .legend {
-  padding: 0px 4px;
-  font-size: 13px;
-  line-height: 14px;
+  padding: 0px 0.25rem;
+  font-size: 0.81rem;
+  line-height: 0.875rem;
   color: #525252;
 }

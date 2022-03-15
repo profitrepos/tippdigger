@@ -1,0 +1,87 @@
+.info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.profile {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  span {
+    font-size: 1.125rem;
+    line-height: 1.25rem;
+  }
+}
+.avatar {
+  margin-right: 0.75rem;
+}
+.icon {
+  &:focus-visible {
+    outline: 1px solid #ababab;
+  }
+}
+.balance {
+  font-size: 1.5rem;
+  font-weight: 500;
+  span {
+    &::after {
+      content: " €";
+    }
+  }
+}
+
+.qr_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 2.3rem;
+}
+
+.title {
+  text-align: center;
+  line-height: 1.75rem;
+  font-size: 1.375rem;
+  font-weight: 500;
+  span {
+    font-weight: 700;
+  }
+}
+
+.qr_code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.75rem;
+  img {
+    max-width: 100%;
+  }
+  span {
+    font-weight: 800;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    margin-top: -1rem;
+  }
+}
+
+.payment_link {
+  color: #2ea448;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  text-decoration: none;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  &:focus-visible {
+    outline: 1px solid #ababab;
+  }
+}
+
+.order_btn {
+  margin-bottom: 0.75rem;
+}
+.printing_text {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  color: #828282;
+}

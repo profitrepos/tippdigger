@@ -1,26 +1,43 @@
-import React from "react";
-import { TextField, Radio } from "./components";
+import React, { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import Layout from "./layout/layout";
+import {
+  AuthPage,
+  ProfilePage,
+  QRpage,
+  RegisterPage,
+  TransactionsPage,
+  WithdrawalPage,
+} from "./pages";
 
 function App() {
-  return (
-    <div>
-      <h1>Title</h1>
-      <TextField legend="Тестовый инпут" placeholder="Doe" />
-      <TextField legend="Repeat password" type="password" />
-      <Radio
-        label="Tip recipient"
-        id="tipRecipient"
-        name="accountType"
-        tabIndex={0}
-      />
-      <Radio
-        label="Administrator"
-        id="administrator"
-        name="accountType"
-        tabIndex={0}
-      />
-    </div>
-  );
+  const [isAuth, setIsAuth] = useState(true);
+
+  if (isAuth) {
+    return (
+      <Layout>
+        <Routes>
+          <Route path="/" element={<QRpage />} />
+          <Route path="/withdrawal" element={<WithdrawalPage />} />
+          <Route path="/transactions" element={<TransactionsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Layout>
+    );
+  } else {
+    return (
+      <Routes>
+        <Route path="/auth" element={<AuthPage />} />
+        <Route
+          path="/register"
+          element={<RegisterPage setIsAuth={setIsAuth} />}
+        />
+        <Route path="*" element={<Navigate to="/register" />} />
+      </Routes>
+    );
+  }
 }
 
 export default App;

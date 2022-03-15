@@ -1,0 +1,17 @@
+.avatar_box {
+  object-fit: cover;
+
+  img {
+    max-width: 100%;
+  }
+}
+.small {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+.large {
+  width: 4.5rem;
+  height: 4.5rem;
+}

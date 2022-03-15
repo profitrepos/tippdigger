@@ -1,0 +1,56 @@
+.footer {
+  height: 5rem;
+  width: 100%;
+  position: fixed;
+  background-color: rgba(249, 249, 249, 0.94);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+}
+
+.link {
+  padding-top: 0.5rem;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    .icon {
+      fill: #2ea448;
+    }
+    .link_title {
+      color: #2ea448;
+    }
+  }
+  &:focus-visible {
+    outline: 1px solid #a6b1bc;
+  }
+  @media (min-width: 479px) {
+    padding-top: 1rem;
+  }
+}
+.link_title {
+  line-height: 100%;
+  color: #828282;
+  font-weight: 500;
+  font-size: 0.625rem;
+  transition: all 0.2s ease-in;
+  @media (min-width: 479px) {
+    font-size: 1rem;
+  }
+}
+.active_link {
+  .icon {
+    fill: #2ea448;
+  }
+  .link_title {
+    color: #2ea448;
+  }
+}
+.icon {
+  height: 2rem;
+  transition: all 0.2s ease-in;
+}
