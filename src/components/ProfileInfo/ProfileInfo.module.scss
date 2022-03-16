@@ -1,0 +1,22 @@
+.info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.descr {
+  margin-left: 1rem;
+}
+.title {
+  display: block;
+  color: #828282;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  @media (min-width: 479px) {
+    font-size: 1rem;
+  }
+}
+.value {
+  display: block;
+  line-height: 1.25rem;
+  font-weight: 600;
+}

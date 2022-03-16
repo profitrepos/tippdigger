@@ -16,7 +16,7 @@ export const QRpage = () => {
             <Avatar className={styles.avatar} />
             <span>John Doe</span>
           </div>
-          <Link to="/" className={styles.icon}>
+          <Link to="/profile/edit" className={styles.icon}>
             <PencilIcon />
           </Link>
         </div>
@@ -32,7 +32,7 @@ export const QRpage = () => {
           <img src={QR} alt="QR-code" />
           <span>700-413-020</span>
         </div>
-        <Link to="/" className={styles.payment_link}>
+        <Link to="/payment" className={styles.payment_link}>
           Go to payment page
         </Link>
         <Button className={styles.order_btn}>Order a print</Button>

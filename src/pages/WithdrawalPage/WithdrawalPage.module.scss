@@ -1,3 +1,9 @@
+.withdrawal {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
 .top_box {
   display: flex;
   align-items: center;
@@ -20,6 +26,10 @@
   &::after {
     content: " €";
   }
+}
+
+.bank_card {
+  flex: 1 1 auto;
 }
 
 .toggler {
@@ -120,4 +130,8 @@
 
 .continue_btn {
   margin-bottom: 2rem;
+}
+
+.internal {
+  flex: 1 1 auto;
 }

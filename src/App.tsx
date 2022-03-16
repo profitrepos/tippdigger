@@ -4,6 +4,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layout/layout";
 import {
   AuthPage,
+  PaymentPage,
+  ProfileEditPage,
   ProfilePage,
   QRpage,
   RegisterPage,
@@ -22,6 +24,8 @@ function App() {
           <Route path="/withdrawal" element={<WithdrawalPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/edit" element={<ProfileEditPage />} />
+          <Route path="/payment" element={<ProfileEditPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
@@ -30,6 +34,7 @@ function App() {
     return (
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route
           path="/register"
           element={<RegisterPage setIsAuth={setIsAuth} />}

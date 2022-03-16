@@ -5,3 +5,7 @@ export * from "./Button/Button";
 export * from "./Header/Header";
 export * from "./ShadowBox/ShadowBox";
 export * from "./Avatar/Avatar";
+export * from "./FilterItem/FilterItem";
+export * from "./Transaction/Transaction";
+export * from "./ProfileInfo/ProfileInfo";
+export * from "./ProfileLink/ProfileLink";

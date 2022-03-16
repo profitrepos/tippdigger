@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, FC, HTMLAttributes, SVGProps } from "react";
+import React, { FC, SVGProps } from "react";
 import cn from "classnames";
 
 import styles from "./Footer.module.scss";
@@ -19,7 +19,7 @@ const links: IFooterLink[] = [
   {
     title: "QR Code",
     Icon: QRCodeIcon,
-    navigateTo: "",
+    navigateTo: "/",
   },
   {
     title: "Withdrawal",
@@ -40,7 +40,10 @@ const links: IFooterLink[] = [
 
 const FooterLink: FC<IFooterLink> = ({ title, Icon, navigateTo }) => {
   let resolved = useResolvedPath(navigateTo);
-  let match = useMatch({ path: resolved.pathname, end: true });
+  let match = useMatch({
+    path: resolved.pathname,
+    end: navigateTo !== "profile", //?
+  });
 
   return (
     <Link
