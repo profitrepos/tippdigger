@@ -8,7 +8,7 @@ interface RadioProps
     HTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  label: string;
+  label: string | number;
   name: string;
   id: string;
 }

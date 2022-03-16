@@ -1,9 +1,9 @@
-import React from "react";
-import { FilterItem, Header, Transaction } from "../../components";
+import React, { ChangeEvent } from "react";
+import { CustomRadio, Header, Transaction } from "../../components";
 
 import styles from "./TransactionsPage.module.scss";
 
-interface IFilterItem {
+interface ICustomRadio {
   label: string;
   id: string;
 }
@@ -19,7 +19,7 @@ interface ITransactions {
   [key: string]: ITransactionsItem[];
 }
 
-const filters: IFilterItem[] = [
+const filters: ICustomRadio[] = [
   {
     label: "Today",
     id: "today",
@@ -104,6 +104,10 @@ const testTransactions: ITransactions = {
 };
 
 export const TransactionsPage = () => {
+  const onFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("onFilterChange --> ", e.target.value);
+  };
+
   return (
     <div className={styles.transactions}>
       <Header />
@@ -111,11 +115,13 @@ export const TransactionsPage = () => {
       <div className={styles.filter}>
         {filters.map((filter) => {
           return (
-            <FilterItem
+            <CustomRadio
               name="transactions"
               key={filter.id}
               {...filter}
               className={styles.filter_item}
+              value={filter.label}
+              onChange={onFilterChange}
             />
           );
         })}

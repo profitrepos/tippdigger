@@ -4,6 +4,7 @@ import cn from "classnames";
 import { ReactComponent as GreenLogo } from "./icons/logo_green.svg";
 import { ReactComponent as OrangeLogo } from "./icons/logo_orange.svg";
 import styles from "./Header.module.scss";
+import { Link } from "react-router-dom";
 
 interface HeaderProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -23,11 +24,13 @@ export const Header: FC<HeaderProps> = ({
           [styles.white]: type === "white",
         })}
       >
-        {type === "green" ? <GreenLogo /> : <OrangeLogo />}
-        <h1 className={styles.title_text}>
-          <span>Tipp</span>
-          <span>Digger</span>
-        </h1>
+        <Link to="/app" className={styles.logo_link}>
+          {type === "green" ? <GreenLogo /> : <OrangeLogo />}
+          <h1 className={styles.title_text}>
+            <span>Tipp</span>
+            <span>Digger</span>
+          </h1>
+        </Link>
       </div>
       <div className={styles.burger}>
         <span />

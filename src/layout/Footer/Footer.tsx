@@ -19,7 +19,7 @@ const links: IFooterLink[] = [
   {
     title: "QR Code",
     Icon: QRCodeIcon,
-    navigateTo: "/",
+    navigateTo: "/app",
   },
   {
     title: "Withdrawal",
@@ -42,7 +42,7 @@ const FooterLink: FC<IFooterLink> = ({ title, Icon, navigateTo }) => {
   let resolved = useResolvedPath(navigateTo);
   let match = useMatch({
     path: resolved.pathname,
-    end: navigateTo !== "profile", //?
+    end: false,
   });
 
   return (

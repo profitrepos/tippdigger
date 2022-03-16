@@ -15,6 +15,12 @@
   text-transform: uppercase;
   margin: 0 0 0 0.5rem;
 }
+.logo_link {
+  cursor: pointer;
+  display: flex;
+  text-decoration: none;
+  color: #333333;
+}
 .green {
   .title_text {
     span {

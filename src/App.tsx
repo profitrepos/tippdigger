@@ -20,13 +20,13 @@ function App() {
     return (
       <Layout>
         <Routes>
-          <Route path="/" element={<QRpage />} />
-          <Route path="/withdrawal" element={<WithdrawalPage />} />
-          <Route path="/transactions" element={<TransactionsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/profile/edit" element={<ProfileEditPage />} />
-          <Route path="/payment" element={<ProfileEditPage />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="app" element={<QRpage />} />
+          <Route path="app/payment" element={<PaymentPage isInside />} />
+          <Route path="withdrawal" element={<WithdrawalPage />} />
+          <Route path="transactions" element={<TransactionsPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="profile/edit" element={<ProfileEditPage />} />
+          <Route path="*" element={<Navigate to="/app" />} />
         </Routes>
       </Layout>
     );
