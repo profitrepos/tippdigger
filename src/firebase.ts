@@ -30,6 +30,8 @@ export const logout = () => {
   return signOut(auth);
 };
 
+export const login = (email: string, password: string) => {};
+
 // Custom hooks
 
 export const useAuth = () => {

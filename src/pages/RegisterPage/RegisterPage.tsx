@@ -1,4 +1,4 @@
-import React, { FC, HTMLInputTypeAttribute } from "react";
+import React, { FC } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import styles from "./RegisterPage.module.scss";
@@ -9,26 +9,15 @@ import {
   Radio,
   TextField,
 } from "../../components";
-import { IRegistrationForm } from "../../models/User";
-import { Controller, useForm, useFormState } from "react-hook-form";
-import { userSchema } from "../../utils/validators/user";
-import { auth } from "../../firebase";
+import { IAuthField, IRegistrationForm } from "../../models/User";
+import { useForm } from "react-hook-form";
+import { registrationSchema } from "../../utils/validators/user";
 
 interface RegisterPageProps {
   signUp: (email: string, password: string) => void;
 }
 
-interface IRegisterField {
-  legend: string;
-  maxLength?: number;
-  fieldName: keyof IRegistrationForm;
-  type?: HTMLInputTypeAttribute;
-  masked?: boolean;
-  mask?: string;
-  placeholder?: string;
-}
-
-const registerFields: IRegisterField[] = [
+const registerFields: IAuthField[] = [
   {
     placeholder: "John",
     legend: "First Name",
@@ -90,7 +79,7 @@ export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
     setValue,
     watch,
   } = useForm<IRegistrationForm>({
-    resolver: yupResolver(userSchema),
+    resolver: yupResolver(registrationSchema),
     defaultValues: {
       accountType: "tip_recipient",
       access: false,

@@ -88,7 +88,7 @@ export const ProfilePage: FC<ProfilePageProps> = ({ logout }) => {
           <Link to="edit">
             <EditIcon />
           </Link>
-          <button className={styles.exit}>
+          <button className={styles.exit} onClick={logout}>
             <ExitIcon />
           </button>
         </div>

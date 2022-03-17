@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { logout, signUp, useAuth } from "./firebase";
+import { login, logout, signUp, useAuth } from "./firebase";
 
 import Layout from "./layout/layout";
 import {
@@ -25,7 +25,7 @@ function App() {
       setLoading(true);
       await signUp(email, password);
     } catch (error) {
-      window.alert(JSON.stringify(error));
+      console.log(error);
       setError("error");
     } finally {
       setLoading(false);
@@ -34,6 +34,10 @@ function App() {
 
   const handleLogout = () => {
     logout();
+  };
+
+  const handleLogin = (email: string, password: string) => {
+    login(email, password);
   };
 
   console.log("loading ---> ", loading);
@@ -60,7 +64,7 @@ function App() {
   } else {
     return (
       <Routes>
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth" element={<AuthPage login={handleLogin} />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route
           path="/register"

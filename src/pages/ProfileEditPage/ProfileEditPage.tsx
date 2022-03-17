@@ -1,27 +1,21 @@
-import React, { HTMLInputTypeAttribute } from "react";
+import React from "react";
 import { Avatar, Button, MaskedTextField, TextField } from "../../components";
+import { IAuthField } from "../../models/User";
 
 import styles from "./ProfileEditPage.module.scss";
 
-interface IRegisterFields {
-  placeholder?: string;
-  legend: string;
-  maxLength: number;
-  type?: HTMLInputTypeAttribute;
-  masked?: boolean;
-  mask?: string;
-}
-
-const profileFields: IRegisterFields[] = [
+const profileFields: IAuthField[] = [
   {
     placeholder: "John",
     legend: "First Name",
     maxLength: 100,
+    fieldName: "firstName",
   },
   {
     placeholder: "Doe",
     legend: "Last name",
     maxLength: 100,
+    fieldName: "lastName",
   },
   {
     placeholder: "+49 777 000 00 00",
@@ -30,32 +24,38 @@ const profileFields: IRegisterFields[] = [
     type: "number",
     masked: true,
     mask: "+00 000 000 00 00",
+    fieldName: "phone",
   },
   {
     placeholder: "sample@mail.com",
     legend: "Email",
     maxLength: 100,
     type: "email",
+    fieldName: "email",
   },
   {
     placeholder: "Berlin",
     legend: "City",
     maxLength: 100,
+    fieldName: "city",
   },
   {
     placeholder: "“Google”",
     legend: "Company",
     maxLength: 100,
+    fieldName: "company",
   },
   {
     legend: "Password",
     maxLength: 100,
     type: "password",
+    fieldName: "password",
   },
   {
     legend: "Repeat password",
     maxLength: 100,
     type: "password",
+    fieldName: "confirm_password",
   },
 ];
 
