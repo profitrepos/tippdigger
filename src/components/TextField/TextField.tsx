@@ -18,8 +18,7 @@ interface TextFieldProps
     HTMLInputElement
   > {
   legend: string;
-  // убрать ?
-  reset?: (fieldName: string) => void;
+  // delete ?
   fieldName?: string;
   setValue?: (fieldName: string, value: string) => void;
   error?: FieldError;
@@ -43,7 +42,7 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       showClearIcon,
       fieldName,
       error,
-      reset,
+      setValue,
       ...props
     },
     ref
@@ -51,9 +50,9 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     const [inputType, setInputType] = useState<HTMLInputTypeAttribute>(type);
 
     const clearInput = () => {
-      if (reset && fieldName) {
+      if (setValue && fieldName) {
         //TODO: убрать
-        reset(fieldName);
+        setValue(fieldName, "");
       }
     };
 
@@ -109,7 +108,6 @@ export const MaskedTextField = React.forwardRef<ReactInputMask, TextFieldProps>(
       fieldName,
       showClearIcon,
       setValue,
-      reset,
       error,
       ...props
     },

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, SVGProps } from "react";
+import React, { FC, FunctionComponent, SVGProps } from "react";
 import { Link } from "react-router-dom";
 
 import { Avatar, Header, ProfileInfo, ProfileLink } from "../../components";
@@ -71,7 +71,11 @@ const profileLinks: IProfileLink[] = [
   },
 ];
 
-export const ProfilePage = () => {
+interface ProfilePageProps {
+  logout: () => void;
+}
+
+export const ProfilePage: FC<ProfilePageProps> = ({ logout }) => {
   return (
     <div className={styles.profile}>
       <Header />
@@ -84,9 +88,9 @@ export const ProfilePage = () => {
           <Link to="edit">
             <EditIcon />
           </Link>
-          <Link to="/profile">
+          <button className={styles.exit}>
             <ExitIcon />
-          </Link>
+          </button>
         </div>
       </div>
       <div className={styles.info}>

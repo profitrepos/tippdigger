@@ -12,9 +12,10 @@ import {
 import { IRegistrationForm } from "../../models/User";
 import { Controller, useForm, useFormState } from "react-hook-form";
 import { userSchema } from "../../utils/validators/user";
+import { auth } from "../../firebase";
 
 interface RegisterPageProps {
-  setIsAuth: (value: boolean) => void;
+  signUp: (email: string, password: string) => void;
 }
 
 interface IRegisterField {
@@ -81,12 +82,11 @@ const registerFields: IRegisterField[] = [
   },
 ];
 
-export const RegisterPage: FC<RegisterPageProps> = ({ setIsAuth }) => {
+export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    resetField,
     setValue,
     watch,
   } = useForm<IRegistrationForm>({
@@ -95,16 +95,12 @@ export const RegisterPage: FC<RegisterPageProps> = ({ setIsAuth }) => {
       accountType: "tip_recipient",
       access: false,
       phone: "777555223301",
-      lastName: "asdasdas",
     },
   });
 
-  const onSubmit = (data: IRegistrationForm) => {
-    console.log(data);
-  };
-
-  const resetValue = (fieldName: string) => {
-    resetField(fieldName as keyof IRegistrationForm);
+  const onSubmit = async (data: IRegistrationForm) => {
+    // s.replace(" ", "")
+    signUp(data.email, data.password);
   };
 
   const setFieldValue = (fieldName: string, value: string) => {
@@ -121,7 +117,6 @@ export const RegisterPage: FC<RegisterPageProps> = ({ setIsAuth }) => {
           return (
             <MaskedTextField
               key={input.fieldName}
-              reset={resetValue}
               showClearIcon={Boolean(values[input.fieldName])}
               setValue={setFieldValue}
               error={errors[input.fieldName]}
@@ -133,8 +128,8 @@ export const RegisterPage: FC<RegisterPageProps> = ({ setIsAuth }) => {
           return (
             <TextField
               key={input.fieldName}
-              reset={resetValue}
               error={errors[input.fieldName]}
+              setValue={setFieldValue}
               showClearIcon={Boolean(values[input.fieldName])}
               {...input}
               {...register(input.fieldName)}
