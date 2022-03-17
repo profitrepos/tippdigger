@@ -14,29 +14,25 @@ interface CheckboxProps
   type?: "primary" | "ghost";
 }
 
-export const Checkbox: FC<CheckboxProps> = ({
-  id,
-  text,
-  type = "primary",
-  className,
-  ...props
-}) => {
-  return (
-    <div className={cn(styles.checkbox_box, className)}>
-      <input type="checkbox" id={id} {...props} />
+export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ id, text, type = "primary", className, ...props }, ref) => {
+    return (
+      <div className={cn(styles.checkbox_box, className)}>
+        <input type="checkbox" id={id} {...props} ref={ref} />
 
-      <label
-        htmlFor={id}
-        className={cn(styles.label, {
-          [styles.primary]: type === "primary",
-          [styles.ghost]: type === "ghost",
-        })}
-      >
-        <span className={styles.square}>
-          <CheckIcon className={styles.icon} />
-        </span>
-        {text && <span className={styles.text}>{text}</span>}
-      </label>
-    </div>
-  );
-};
+        <label
+          htmlFor={id}
+          className={cn(styles.label, {
+            [styles.primary]: type === "primary",
+            [styles.ghost]: type === "ghost",
+          })}
+        >
+          <span className={styles.square}>
+            <CheckIcon className={styles.icon} />
+          </span>
+          {text && <span className={styles.text}>{text}</span>}
+        </label>
+      </div>
+    );
+  }
+);

@@ -16,7 +16,7 @@ import { ReactComponent as ConditionalIcon } from "./icons/conditions.svg";
 import { Link } from "react-router-dom";
 
 export const WithdrawalPage = () => {
-  const [isInternal, setIsInternal] = useState(true);
+  const [isInternal, setIsInternal] = useState(false);
 
   const switchHandler = (value: boolean) => {
     setIsInternal(value);

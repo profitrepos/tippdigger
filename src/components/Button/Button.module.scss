@@ -13,6 +13,9 @@
   &:focus {
     outline: 1px solid #ababab;
   }
+  &:disabled {
+    background-color: #7fc58e;
+  }
 }
 .primary {
   background-color: #2ea448;

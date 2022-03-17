@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useState } from "react";
-import MaskInput from "react-maskinput";
+import MaskInput from "react-input-mask";
 
 import { ReactComponent as PlusIcon } from "./icons/plus.svg";
 import { ReactComponent as MinusIcon } from "./icons/minus.svg";

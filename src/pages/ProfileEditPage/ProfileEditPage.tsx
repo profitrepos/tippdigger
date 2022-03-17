@@ -74,7 +74,7 @@ export const ProfileEditPage = () => {
         }
       })}
       <div className={styles.footer}>
-        <Button type="ghost">Cancel</Button>
+        <Button appearance="ghost">Cancel</Button>
         <Button>Safe</Button>
       </div>
     </div>

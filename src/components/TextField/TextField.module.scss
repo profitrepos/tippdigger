@@ -20,11 +20,27 @@
   input:focus + fieldset {
     border-color: #2ea448;
   }
+  &.error {
+    fieldset {
+      border-color: red;
+    }
+    .legend {
+      color: red;
+    }
+  }
 }
 
 input[type="password"] {
   font-family: Verdana;
   letter-spacing: 0.125rem;
+}
+
+.error_msg {
+  color: red;
+  font-size: 0.8rem;
+  position: absolute;
+  right: 0;
+  bottom: -0.9rem;
 }
 
 .icon_btn {

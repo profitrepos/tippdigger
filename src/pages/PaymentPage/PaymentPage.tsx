@@ -32,13 +32,13 @@ export const PaymentPage: FC<PaymentPageProps> = ({ isInside }) => {
         <h3 className={styles.subtitle}>Rate Service</h3>
         <StarRating />
         <div className={styles.methods}>
-          <Button type="ghost" className={styles.method_btn}>
+          <Button appearance="ghost" className={styles.method_btn}>
             <ApplePayIcon />
           </Button>
-          <Button type="ghost" className={styles.method_btn}>
+          <Button appearance="ghost" className={styles.method_btn}>
             <GooglePayIcon />
           </Button>
-          <Button type="ghost" className={styles.method_btn}>
+          <Button appearance="ghost" className={styles.method_btn}>
             <CreditCardIcon />
           </Button>
         </div>

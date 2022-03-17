@@ -14,7 +14,7 @@ import {
 } from "./pages";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
 
   if (isAuth) {
     return (
@@ -39,7 +39,7 @@ function App() {
           path="/register"
           element={<RegisterPage setIsAuth={setIsAuth} />}
         />
-        <Route path="*" element={<Navigate to="/register" />} />
+        <Route path="*" element={<Navigate to="/auth" />} />
       </Routes>
     );
   }

@@ -1,12 +1,12 @@
 import React, {
   DetailedHTMLProps,
-  FC,
   HTMLAttributes,
   HTMLInputTypeAttribute,
   useState,
 } from "react";
 import cn from "classnames";
-import MaskInput from "react-maskinput";
+import MaskInput, { ReactInputMask } from "react-input-mask";
+import { FieldError } from "react-hook-form";
 
 import styles from "./TextField.module.scss";
 import { ReactComponent as ClearIcon } from "./icons/clear.svg";
@@ -18,89 +18,131 @@ interface TextFieldProps
     HTMLInputElement
   > {
   legend: string;
-
+  // убрать ?
+  reset?: (fieldName: string) => void;
+  fieldName?: string;
+  setValue?: (fieldName: string, value: string) => void;
+  error?: FieldError;
+  //
   type?: HTMLInputTypeAttribute;
   maxlength?: number;
   placeholder?: string;
   masked?: boolean;
   mask?: string;
+  showClearIcon?: boolean;
 }
 
-export const TextField: FC<TextFieldProps> = ({
-  className,
-  type = "text",
-  placeholder,
-  legend,
-  maxlength,
-  ...props
-}) => {
-  const [inputType, setInputType] = useState<HTMLInputTypeAttribute>(type);
+export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+  (
+    {
+      className,
+      type = "text",
+      placeholder,
+      legend,
+      maxlength,
+      showClearIcon,
+      fieldName,
+      error,
+      reset,
+      ...props
+    },
+    ref
+  ) => {
+    const [inputType, setInputType] = useState<HTMLInputTypeAttribute>(type);
 
-  const clearInput = () => {
-    console.log("clear");
-  };
+    const clearInput = () => {
+      if (reset && fieldName) {
+        //TODO: убрать
+        reset(fieldName);
+      }
+    };
 
-  const togglePassword = () => {
-    if (inputType === "password") {
-      setInputType("text");
-    } else {
-      setInputType("password");
-    }
-  };
+    const togglePassword = () => {
+      if (inputType === "password") {
+        setInputType("text");
+      } else {
+        setInputType("password");
+      }
+    };
 
-  return (
-    <div className={cn(styles.input_box, className)}>
-      <input
-        {...props}
-        placeholder={placeholder}
-        security={"isPassword"}
-        type={inputType}
-        maxLength={maxlength}
-      />
-      <fieldset className={styles.fieldset}>
-        <legend className={styles.legend}>{legend}</legend>
-      </fieldset>
-      {type === "password" ? (
-        <button onClick={togglePassword} className={styles.icon_btn}>
-          <PasswordIcon />
-        </button>
-      ) : (
-        <button onClick={clearInput} className={styles.icon_btn}>
-          <ClearIcon />
-        </button>
-      )}
-    </div>
-  );
-};
+    return (
+      <div
+        className={cn(styles.input_box, className, {
+          [styles.error]: error,
+        })}
+      >
+        <input
+          {...props}
+          placeholder={placeholder}
+          security={"isPassword"}
+          type={inputType}
+          maxLength={maxlength}
+          ref={ref}
+        />
+        <fieldset className={styles.fieldset}>
+          <legend className={styles.legend}>{legend}</legend>
+        </fieldset>
+        {type === "password" ? (
+          <button onClick={togglePassword} className={styles.icon_btn}>
+            <PasswordIcon />
+          </button>
+        ) : showClearIcon ? (
+          <button onClick={clearInput} className={styles.icon_btn}>
+            <ClearIcon />
+          </button>
+        ) : null}
+        {error && <span className={styles.error_msg}>{error.message}</span>}
+      </div>
+    );
+  }
+);
 
-export const MaskedTextField: FC<TextFieldProps> = ({
-  className,
-  legend,
-  placeholder,
-  mask,
-  type,
-  masked,
-  ...props
-}) => {
-  const clearInput = () => {
-    console.log("clearInput");
-  };
+export const MaskedTextField = React.forwardRef<ReactInputMask, TextFieldProps>(
+  (
+    {
+      className,
+      legend,
+      placeholder,
+      mask,
+      type,
+      masked,
+      fieldName,
+      showClearIcon,
+      setValue,
+      reset,
+      error,
+      ...props
+    },
+    ref
+  ) => {
+    const clearInput = () => {
+      if (setValue && fieldName) {
+        //TODO: убрать
+        setValue(fieldName, "");
+      }
+    };
 
-  return (
-    <div className={cn(styles.input_box, className)}>
-      <MaskInput
-        mask={mask}
-        maskChar="_"
-        //@ts-ignore
-        placeholder={placeholder}
-        {...props}
-      />
-      <fieldset className={styles.fieldset}>
-        <legend className={styles.legend}>{legend}</legend>
-      </fieldset>
-      <button onClick={clearInput} className={styles.icon_btn}>
-        <ClearIcon />
-      </button>
-    </div>
-  );
-};
+    return (
+      <div
+        className={cn(styles.input_box, className, {
+          [styles.error]: error,
+        })}
+      >
+        <MaskInput
+          mask={mask as string}
+          placeholder={placeholder}
+          {...props}
+          ref={ref}
+        />
+        <fieldset className={styles.fieldset}>
+          <legend className={styles.legend}>{legend}</legend>
+        </fieldset>
+        {showClearIcon && (
+          <button onClick={clearInput} className={styles.icon_btn}>
+            <ClearIcon />
+          </button>
+        )}
+      </div>
+    );
+  }
+);

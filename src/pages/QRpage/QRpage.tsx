@@ -8,7 +8,7 @@ import QR from "../../assets/images/qr.png";
 
 export const QRpage = () => {
   return (
-    <>
+    <div className={styles.qr}>
       <Header />
       <ShadowBox>
         <div className={styles.info}>
@@ -41,6 +41,6 @@ export const QRpage = () => {
           sticker, etc.) for printing and you will receive ready-made materials.
         </p>
       </div>
-    </>
+    </div>
   );
 };
