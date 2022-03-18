@@ -1,30 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import QRCode from "react-qr-code";
 
 import styles from "./QRpage.module.scss";
 import { Avatar, Button, Header, ShadowBox } from "../../components";
 import { ReactComponent as PencilIcon } from "./icons/pencil.svg";
-import QR from "../../assets/images/qr.png";
-import QRCode from "react-qr-code";
+import { useAppSelector } from "../../hooks/redux";
+import { selectUserData } from "../../store/user/userSlice";
 
 export const QRpage = () => {
+  const userData = useAppSelector(selectUserData);
+
   return (
     <div className={styles.qr}>
       <Header />
-      <ShadowBox>
-        <div className={styles.info}>
-          <div className={styles.profile}>
-            <Avatar className={styles.avatar} />
-            <span>John Doe</span>
+      {userData && (
+        <ShadowBox>
+          <div className={styles.info}>
+            <div className={styles.profile}>
+              <Avatar className={styles.avatar} />
+              <span>{`${userData.firstName} ${userData.lastName}`}</span>
+            </div>
+            <Link to="/profile/edit" className={styles.icon}>
+              <PencilIcon />
+            </Link>
           </div>
-          <Link to="/profile/edit" className={styles.icon}>
-            <PencilIcon />
-          </Link>
-        </div>
-        <div className={styles.balance}>
-          Balance: <span>0</span>
-        </div>
-      </ShadowBox>
+          <div className={styles.balance}>
+            Balance: <span>{userData.balance}</span>
+          </div>
+        </ShadowBox>
+      )}
       <div className={styles.qr_box}>
         <h2 className={styles.title}>
           Your personal <span>QR code</span>

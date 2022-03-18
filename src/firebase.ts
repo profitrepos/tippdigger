@@ -62,6 +62,7 @@ export const DB = {
         city: formData.city,
         accountType: formData.accountType,
         rating: 0,
+        access: formData.access,
       };
       const creatResp = await addDoc(userCollectionRef, newUser);
       const userSnap = await getDoc(creatResp);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import cn from "classnames";
+import { Link } from "react-router-dom";
 
 import styles from "./WithdrawalPage.module.scss";
 import {
@@ -13,10 +14,13 @@ import {
 } from "../../components";
 import purse from "../../assets/images/purse.png";
 import { ReactComponent as ConditionalIcon } from "./icons/conditions.svg";
-import { Link } from "react-router-dom";
+import { useAppSelector } from "../../hooks/redux";
+import { selectUserData } from "../../store/user/userSlice";
 
 export const WithdrawalPage = () => {
   const [isInternal, setIsInternal] = useState(false);
+
+  const userData = useAppSelector(selectUserData);
 
   const switchHandler = (value: boolean) => {
     setIsInternal(value);
@@ -25,15 +29,17 @@ export const WithdrawalPage = () => {
   return (
     <div className={styles.withdrawal}>
       <Header />
-      <ShadowBox>
-        <div className={styles.top_box}>
-          <Avatar size="large" imgUrl={purse} />
-          <div className={styles.balance}>
-            <span className={styles.balance_title}>Your balance:</span>
-            <span className={styles.balance_value}>15</span>
+      {userData && (
+        <ShadowBox>
+          <div className={styles.top_box}>
+            <Avatar size="large" imgUrl={purse} />
+            <div className={styles.balance}>
+              <span className={styles.balance_title}>Your balance:</span>
+              <span className={styles.balance_value}>{userData.balance}</span>
+            </div>
           </div>
-        </div>
-      </ShadowBox>
+        </ShadowBox>
+      )}
       <div className={styles.toggler}>
         <button
           className={cn(styles.toggler_item, {

@@ -11,6 +11,7 @@ export interface IUser {
   company: string;
   accountType: "administrator" | "tip_recipient";
   rating: number;
+  access: boolean;
 }
 
 export interface IRegistrationForm extends Required<IUser> {

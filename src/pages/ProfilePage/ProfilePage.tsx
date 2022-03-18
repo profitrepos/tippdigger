@@ -13,13 +13,17 @@ import { ReactComponent as OfferIcon } from "./icons/offer.svg";
 import { ReactComponent as PersonalIcon } from "./icons/personal.svg";
 
 import styles from "./ProfilePage.module.scss";
+import { useAppSelector } from "../../hooks/redux";
+import { selectUserData } from "../../store/user/userSlice";
+import { IRegistrationForm } from "../../models/User";
+import { title } from "process";
 
 interface IProfileItem {
   Icon: FunctionComponent<
     SVGProps<SVGSVGElement> & { title?: string | undefined }
   >;
   title: string;
-  value: string;
+  fieldName: keyof IRegistrationForm;
 }
 
 interface IProfileLink {
@@ -34,22 +38,22 @@ const profileInfoItems: IProfileItem[] = [
   {
     Icon: EmailIcon,
     title: "Email",
-    value: "john@gmail.com",
+    fieldName: "email",
   },
   {
     Icon: GPSIcon,
     title: "City",
-    value: "Berlin",
+    fieldName: "city",
   },
   {
     Icon: CompanyIcon,
     title: "Company",
-    value: "My cafe LCC",
+    fieldName: "company",
   },
   {
     Icon: PhoneIcon,
     title: "Phone",
-    value: "+49 123 456 7891",
+    fieldName: "phone",
   },
 ];
 
@@ -76,28 +80,42 @@ interface ProfilePageProps {
 }
 
 export const ProfilePage: FC<ProfilePageProps> = ({ logout }) => {
+  const userData = useAppSelector(selectUserData);
+
   return (
     <div className={styles.profile}>
       <Header />
-      <div className={styles.profile_head}>
-        <div className={styles.left}>
-          <Avatar size="large" />
-          <span className={styles.name}>John Doe</span>
-        </div>
-        <div className={styles.right}>
-          <Link to="edit">
-            <EditIcon />
-          </Link>
-          <button className={styles.exit} onClick={logout}>
-            <ExitIcon />
-          </button>
-        </div>
-      </div>
-      <div className={styles.info}>
-        {profileInfoItems.map((item) => (
-          <ProfileInfo key={item.title} {...item} />
-        ))}
-      </div>
+      {userData && (
+        <>
+          <div className={styles.profile_head}>
+            <div className={styles.left}>
+              <Avatar size="large" />
+              <span
+                className={styles.name}
+              >{`${userData.firstName} ${userData.lastName}`}</span>
+            </div>
+            <div className={styles.right}>
+              <Link to="edit">
+                <EditIcon />
+              </Link>
+              <button className={styles.exit} onClick={logout}>
+                <ExitIcon />
+              </button>
+            </div>
+          </div>
+          <div className={styles.info}>
+            {profileInfoItems.map((item) => (
+              <ProfileInfo
+                key={item.fieldName}
+                title={item.title}
+                //@ts-ignore
+                value={userData[item.fieldName]}
+                Icon={item.Icon}
+              />
+            ))}
+          </div>
+        </>
+      )}
       <div className={styles.links}>
         {profileLinks.map((link) => (
           <ProfileLink {...link} key={link.title} />

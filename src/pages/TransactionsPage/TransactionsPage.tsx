@@ -6,6 +6,7 @@ import styles from "./TransactionsPage.module.scss";
 interface ICustomRadio {
   label: string;
   id: string;
+  checked?: boolean;
 }
 interface ITransactionsItem {
   type: "withdraw" | "receipt";
@@ -23,6 +24,7 @@ const filters: ICustomRadio[] = [
   {
     label: "Today",
     id: "today",
+    checked: true,
   },
   {
     label: "Yesterday",

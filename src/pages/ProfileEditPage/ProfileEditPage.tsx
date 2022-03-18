@@ -64,7 +64,7 @@ const profileFields: IAuthField[] = [
 ];
 
 export const ProfileEditPage = () => {
-  const [_, setFixMaskInput] = useState(0); // не устанавливаются значения по умолчанию в инпут с маской
+  const [, setFixMaskInput] = useState(0); // не устанавливаются значения по умолчанию в инпут с маской
 
   const userData = useAppSelector(selectUserData);
   const userLoading = useAppSelector(selectUserLoading);
@@ -131,10 +131,13 @@ export const ProfileEditPage = () => {
         }
       })}
       <div className={styles.footer}>
-        <Button appearance="ghost" onClick={resetForm}>
+        <Button type="button" appearance="ghost" onClick={resetForm}>
           Cancel
         </Button>
-        <Button disabled={Object.keys(errors).length > 0 || userLoading}>
+        <Button
+          type="submit"
+          disabled={Object.keys(errors).length > 0 || userLoading}
+        >
           {userLoading ? "Loading..." : "Safe"}
         </Button>
       </div>
