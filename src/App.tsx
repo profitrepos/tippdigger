@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { login, logout, signUp, useAuth } from "./firebase";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
 
 import Layout from "./layout/layout";
+import { AuthForm, IRegistrationForm } from "./models/User";
 import {
   AuthPage,
   PaymentPage,
@@ -13,38 +14,40 @@ import {
   TransactionsPage,
   WithdrawalPage,
 } from "./pages";
+import {
+  chekAuth,
+  createUser,
+  login,
+  logout,
+  selectUserData,
+} from "./store/user/userSlice";
 
 function App() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<null | string>(null);
+  const userData = useAppSelector(selectUserData);
 
-  const currentUser = useAuth();
+  const dispatch = useAppDispatch();
 
-  const handleSignup = async (email: string, password: string) => {
-    try {
-      setLoading(true);
-      await signUp(email, password);
-    } catch (error) {
-      console.log(error);
-      setError("error");
-    } finally {
-      setLoading(false);
-    }
+  const handleSignup = (formData: IRegistrationForm) => {
+    dispatch(createUser(formData));
   };
 
   const handleLogout = () => {
-    logout();
+    dispatch(logout());
   };
 
-  const handleLogin = (email: string, password: string) => {
-    login(email, password);
+  const handleLogin = (formData: AuthForm) => {
+    dispatch(login(formData));
   };
 
-  console.log("loading ---> ", loading);
-  console.log("user ---> ", currentUser);
-  console.log("error ---> ", error);
+  useEffect(() => {
+    const initApp = () => {
+      dispatch(chekAuth());
+    };
 
-  if (currentUser) {
+    initApp();
+  }, [dispatch]);
+
+  if (userData) {
     return (
       <Layout>
         <Routes>

@@ -12,9 +12,11 @@ import {
 import { IAuthField, IRegistrationForm } from "../../models/User";
 import { useForm } from "react-hook-form";
 import { registrationSchema } from "../../utils/validators/user";
+import { useAppSelector } from "../../hooks/redux";
+import { selectUserLoading } from "../../store/user/userSlice";
 
 interface RegisterPageProps {
-  signUp: (email: string, password: string) => void;
+  signUp: (formData: IRegistrationForm) => void;
 }
 
 const registerFields: IAuthField[] = [
@@ -83,13 +85,13 @@ export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
     defaultValues: {
       accountType: "tip_recipient",
       access: false,
-      phone: "777555223301",
     },
   });
 
+  const userLoading = useAppSelector(selectUserLoading);
+
   const onSubmit = async (data: IRegistrationForm) => {
-    // s.replace(" ", "")
-    signUp(data.email, data.password);
+    signUp({ ...data, balance: 0, rating: 0 });
   };
 
   const setFieldValue = (fieldName: string, value: string) => {
@@ -151,8 +153,11 @@ export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
           {...register("access")}
         />
       </div>
-      <Button type="submit" disabled={Object.keys(errors).length > 0}>
-        Continue
+      <Button
+        type="submit"
+        disabled={Object.keys(errors).length > 0 || userLoading}
+      >
+        {userLoading ? "Loading..." : "Continue"}
       </Button>
     </form>
   );

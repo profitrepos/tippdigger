@@ -40,7 +40,7 @@ export const Counter = () => {
         <MaskInput
           //@ts-ignore
           className={styles.input}
-          mask="** €"
+          mask="** €"  //TODO: сделать правильную маску
           onChange={onChange}
           value={String(count)}
           alwaysShowMask

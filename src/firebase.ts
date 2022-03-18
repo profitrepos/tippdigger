@@ -1,12 +1,17 @@
-import { signOut, User, UserCredential } from "@firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "@firebase/auth";
 import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { useEffect, useState } from "react";
+  collection,
+  getFirestore,
+  addDoc,
+  getDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+
+import { IRegistrationForm, IUser } from "./models/User";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPJNRHa8ZDp4yM-eB22TDuzgcEYOmJAXs",
@@ -22,32 +27,54 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export const signUp = (email: string, password: string) => {
-  return createUserWithEmailAndPassword(auth, email, password);
+// AUTH
+
+export const AUTH = {
+  signUp: (email: string, password: string) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  },
+
+  logout: () => {
+    return signOut(auth);
+  },
+
+  login: (email: string, password: string) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  },
 };
 
-export const logout = () => {
-  return signOut(auth);
-};
+// DB
 
-export const login = (email: string, password: string) => {};
+const userCollectionRef = collection(db, "users");
+export const DB = {
+  createUser: async (formData: IRegistrationForm) => {
+    // сначала авторизуемся по почту, затем создаем пользователя в базе
+    const authResp = await AUTH.signUp(formData.email, formData.password);
+
+    if (authResp.user.email) {
+      const newUser: Omit<IUser, "id"> = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        balance: 0,
+        phone: formData.phone,
+        email: authResp.user.email,
+        company: formData.company,
+        city: formData.city,
+        accountType: formData.accountType,
+        rating: 0,
+      };
+      const creatResp = await addDoc(userCollectionRef, newUser);
+      const userSnap = await getDoc(creatResp);
+      return userSnap.data() as IUser;
+    } else {
+      return "Ошибка авторизации";
+    }
+  },
+
+  getUserByEmail: async (email: string) => {
+    const q = query(userCollectionRef, where("email", "==", email));
+    return getDocs(q);
+  },
+};
 
 // Custom hooks
-
-export const useAuth = () => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) =>
-      setCurrentUser(user)
-    );
-
-    return unsubscribe;
-  }, []);
-
-  return currentUser;
-};
-
-export { auth };
-
-export default db;

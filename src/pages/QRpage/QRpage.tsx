@@ -5,6 +5,7 @@ import styles from "./QRpage.module.scss";
 import { Avatar, Button, Header, ShadowBox } from "../../components";
 import { ReactComponent as PencilIcon } from "./icons/pencil.svg";
 import QR from "../../assets/images/qr.png";
+import QRCode from "react-qr-code";
 
 export const QRpage = () => {
   return (
@@ -29,7 +30,7 @@ export const QRpage = () => {
           Your personal <span>QR code</span>
         </h2>
         <div className={styles.qr_code}>
-          <img src={QR} alt="QR-code" />
+          <QRCode value="hey" size={240} />
           <span>700-413-020</span>
         </div>
         <Link to="payment" className={styles.payment_link}>

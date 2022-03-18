@@ -1,15 +1,21 @@
 import { HTMLInputTypeAttribute } from "react";
 
-export interface IRegistrationForm {
+export interface IUser {
+  id: string;
+  balance: number;
   firstName: string;
   lastName: string;
   phone: string;
   email: string;
   city: string;
   company: string;
+  accountType: "administrator" | "tip_recipient";
+  rating: number;
+}
+
+export interface IRegistrationForm extends Required<IUser> {
   password: string;
   confirm_password: string;
-  accountType: "administrator" | "tip_recipient";
   access: boolean;
 }
 
@@ -21,4 +27,9 @@ export interface IAuthField {
   masked?: boolean;
   mask?: string;
   placeholder?: string;
+}
+
+export interface AuthForm {
+  email: string;
+  password: string;
 }
