@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/tippdigger/static/css/main.26e1b63e.css",
-    "main.js": "/tippdigger/static/js/main.e1c0e793.js",
+    "main.js": "/tippdigger/static/js/main.e1db002d.js",
     "static/media/SFProDisplay-Semibold.woff": "/tippdigger/static/media/SFProDisplay-Semibold.340c3a1a6dddb0b99476.woff",
     "static/media/SFProDisplay-Medium.woff": "/tippdigger/static/media/SFProDisplay-Medium.7274e74c05adf47dbcd9.woff",
     "static/media/SFProDisplay-Bold.woff": "/tippdigger/static/media/SFProDisplay-Bold.5b08afd6b167d7ec48ce.woff",
@@ -42,10 +42,10 @@
     "static/media/arrow_r.svg": "/tippdigger/static/media/arrow_r.e7a2f6308cf57a24343bbd19150327b9.svg",
     "static/media/minus.svg": "/tippdigger/static/media/minus.7e81f752d67fb6273cdd2af6ce0f43ac.svg",
     "main.26e1b63e.css.map": "/tippdigger/static/css/main.26e1b63e.css.map",
-    "main.e1c0e793.js.map": "/tippdigger/static/js/main.e1c0e793.js.map"
+    "main.e1db002d.js.map": "/tippdigger/static/js/main.e1db002d.js.map"
   },
   "entrypoints": [
     "static/css/main.26e1b63e.css",
-    "static/js/main.e1c0e793.js"
+    "static/js/main.e1db002d.js"
   ]
 }
