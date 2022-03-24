@@ -11,3 +11,4 @@ export * from "./ProfileInfo/ProfileInfo";
 export * from "./ProfileLink/ProfileLink";
 export * from "./Counter/Counter";
 export * from "./StarRating/StarRating";
+export * from "./Preloader/Preloader";

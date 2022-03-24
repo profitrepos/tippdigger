@@ -9,6 +9,7 @@ import {
   query,
   where,
   getDocs,
+  doc,
 } from "firebase/firestore";
 
 import { IRegistrationForm, IUser } from "./models/User";
@@ -55,18 +56,20 @@ export const DB = {
       const newUser: Omit<IUser, "id"> = {
         firstName: formData.firstName,
         lastName: formData.lastName,
-        balance: 0,
+        balance: formData.balance,
         phone: formData.phone,
         email: authResp.user.email,
         company: formData.company,
         city: formData.city,
         accountType: formData.accountType,
-        rating: 0,
+        rating: formData.rating,
         access: formData.access,
+        transactions: formData.transactions,
       };
+
       const creatResp = await addDoc(userCollectionRef, newUser);
       const userSnap = await getDoc(creatResp);
-      return userSnap.data() as IUser;
+      return { ...userSnap.data(), id: userSnap.id } as IUser;
     } else {
       return "Ошибка авторизации";
     }
@@ -75,6 +78,12 @@ export const DB = {
   getUserByEmail: async (email: string) => {
     const q = query(userCollectionRef, where("email", "==", email));
     return getDocs(q);
+  },
+  getUserById: async (id: string) => {
+    const docRef = doc(db, "users", id);
+    const docSnap = await getDoc(docRef);
+
+    return docSnap;
   },
 };
 

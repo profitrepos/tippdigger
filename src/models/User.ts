@@ -1,5 +1,13 @@
 import { HTMLInputTypeAttribute } from "react";
 
+export interface ITransactionsItem {
+  type: "withdraw" | "receipt";
+  time: string;
+  sum: string | number;
+  senderName?: string;
+  id: string;
+}
+
 export interface IUser {
   id: string;
   balance: number;
@@ -12,9 +20,10 @@ export interface IUser {
   accountType: "administrator" | "tip_recipient";
   rating: number;
   access: boolean;
+  transactions: ITransactionsItem[];
 }
 
-export interface IRegistrationForm extends Required<IUser> {
+export interface IRegistrationForm extends Omit<IUser, "id"> {
   password: string;
   confirm_password: string;
   access: boolean;

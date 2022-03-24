@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Preloader } from "./components";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 
 import Layout from "./layout/layout";
@@ -19,10 +20,12 @@ import {
   createUser,
   login,
   logout,
+  selectAuthChecking,
   selectUserData,
 } from "./store/user/userSlice";
 
 function App() {
+  const authChecking = useAppSelector(selectAuthChecking);
   const userData = useAppSelector(selectUserData);
 
   const dispatch = useAppDispatch();
@@ -47,12 +50,16 @@ function App() {
     initApp();
   }, [dispatch]);
 
+  if (authChecking) {
+    return <Preloader />;
+  }
+
   if (userData) {
     return (
       <Layout>
         <Routes>
           <Route path="app" element={<QRpage />} />
-          <Route path="app/payment" element={<PaymentPage isInside />} />
+          <Route path="app/payment/:id" element={<PaymentPage isInside />} />
           <Route path="withdrawal" element={<WithdrawalPage />} />
           <Route path="transactions" element={<TransactionsPage />} />
           <Route
@@ -68,7 +75,7 @@ function App() {
     return (
       <Routes>
         <Route path="/auth" element={<AuthPage login={handleLogin} />} />
-        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/payment/:id" element={<PaymentPage />} />
         <Route
           path="/register"
           element={<RegisterPage signUp={handleSignup} />}

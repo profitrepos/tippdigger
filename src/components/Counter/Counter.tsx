@@ -15,7 +15,10 @@ export const Counter = () => {
 
   const onChange = (e: SyntheticEvent<Element, Event>) => {
     //@ts-ignore
-    setCount(Number(e.target.value));
+    if (!isNaN(parseFloat(e.target.value))) {
+      //@ts-ignore
+      setCount(parseFloat(e.target.value));
+    }
   };
 
   const increase = () => {
@@ -24,7 +27,7 @@ export const Counter = () => {
 
   const decrease = () => {
     setCount((prev) => {
-      if (prev <= 0) {
+      if (prev - 5 <= 0) {
         return 0;
       }
       return prev - 5;
@@ -40,9 +43,9 @@ export const Counter = () => {
         <MaskInput
           //@ts-ignore
           className={styles.input}
-          mask="** €"  //TODO: сделать правильную маску
+          mask={[/^\d+\s/, " €"]}
           onChange={onChange}
-          value={String(count)}
+          value={`${count} €`}
           alwaysShowMask
         />
         <Button className={styles.btn} onClick={decrease}>

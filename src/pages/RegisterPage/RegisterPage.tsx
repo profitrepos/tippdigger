@@ -85,13 +85,16 @@ export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
     defaultValues: {
       accountType: "tip_recipient",
       access: false,
+      transactions: [],
+      balance: 0,
+      rating: 0,
     },
   });
 
   const userLoading = useAppSelector(selectUserLoading);
 
   const onSubmit = async (data: IRegistrationForm) => {
-    signUp({ ...data, balance: 0, rating: 0 });
+    signUp(data);
   };
 
   const setFieldValue = (fieldName: string, value: string) => {
@@ -110,6 +113,7 @@ export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
               key={input.fieldName}
               showClearIcon={Boolean(values[input.fieldName])}
               setValue={setFieldValue}
+              //@ts-ignore
               error={errors[input.fieldName]}
               {...input}
               {...register(input.fieldName)}
@@ -119,6 +123,7 @@ export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
           return (
             <TextField
               key={input.fieldName}
+              //@ts-ignore
               error={errors[input.fieldName]}
               setValue={setFieldValue}
               showClearIcon={Boolean(values[input.fieldName])}
@@ -131,7 +136,6 @@ export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
       <div className={styles.account_type}>
         <Radio
           label="Tip recipient"
-          // name="account_type"
           id="recipient"
           value="recipient"
           className={styles.radio}
@@ -139,7 +143,6 @@ export const RegisterPage: FC<RegisterPageProps> = ({ signUp }) => {
         />
         <Radio
           label="Administrator"
-          // name="account_type"
           id="administrator"
           value="administrator"
           className={styles.radio}

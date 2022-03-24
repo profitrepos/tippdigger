@@ -4,16 +4,18 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { AUTH, DB } from "../../firebase";
 
-export interface CounterState {
+export interface UserState {
   userData: IUser | null;
   loading: boolean;
   errorMessage: string | null;
+  authChecking: boolean;
 }
 
-const initialState: CounterState = {
+const initialState: UserState = {
   userData: null,
   loading: false,
   errorMessage: null,
+  authChecking: false,
 };
 
 export const createUser = createAsyncThunk(
@@ -98,7 +100,7 @@ export const chekAuth = createAsyncThunk("user/checkAuth", async () => {
   }
 });
 
-export const counterSlice = createSlice({
+export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
@@ -139,6 +141,13 @@ export const counterSlice = createSlice({
     // ПРОВЕРКА ПРИ ПОВТОРНОМ ВХОДЕ
     [chekAuth.fulfilled.type]: (state, action: PayloadAction<IUser | null>) => {
       state.userData = action.payload;
+      state.authChecking = false;
+    },
+    [chekAuth.pending.type]: (state) => {
+      state.authChecking = true;
+    },
+    [chekAuth.rejected.type]: (state) => {
+      state.authChecking = false;
     },
   },
 });
@@ -147,4 +156,6 @@ export const selectUserData = (state: RootState) => state.user.userData;
 export const selectUserLoading = (state: RootState) => state.user.loading;
 export const selectUserError = (state: RootState) => state.user.errorMessage;
 
-export default counterSlice.reducer;
+export const selectAuthChecking = (state: RootState) => state.user.authChecking;
+
+export default userSlice.reducer;

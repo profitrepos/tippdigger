@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { CustomRadio, Header, Transaction } from "../../components";
+import { ITransactionsItem } from "../../models/User";
 
 import styles from "./TransactionsPage.module.scss";
 
@@ -7,13 +8,6 @@ interface ICustomRadio {
   label: string;
   id: string;
   checked?: boolean;
-}
-interface ITransactionsItem {
-  type: "withdraw" | "receipt";
-  time: string;
-  sum: string | number;
-  senderName?: string;
-  id: string;
 }
 
 interface ITransactions {
@@ -24,7 +18,6 @@ const filters: ICustomRadio[] = [
   {
     label: "Today",
     id: "today",
-    checked: true,
   },
   {
     label: "Yesterday",

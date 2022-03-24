@@ -112,6 +112,7 @@ export const ProfileEditPage = () => {
               key={input.fieldName}
               showClearIcon={Boolean(values[input.fieldName])}
               setValue={setFieldValue}
+              //@ts-ignore
               error={errors[input.fieldName]}
               {...input}
               {...register(input.fieldName)}
@@ -121,6 +122,7 @@ export const ProfileEditPage = () => {
           return (
             <TextField
               key={input.fieldName}
+              //@ts-ignore
               error={errors[input.fieldName]}
               setValue={setFieldValue}
               showClearIcon={Boolean(values[input.fieldName])}
