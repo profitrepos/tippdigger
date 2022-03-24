@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
@@ -18,12 +18,14 @@ const initialOptions = {
   intent: "capture",
 };
 
+//TODO: с авторизацией
+
 ReactDOM.render(
   <PayPalScriptProvider options={initialOptions}>
     <Provider store={store}>
-      <Router>
+      <HashRouter>
         <App />
-      </Router>
+      </HashRouter>
     </Provider>
   </PayPalScriptProvider>,
 

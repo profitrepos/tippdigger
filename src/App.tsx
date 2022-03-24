@@ -60,6 +60,8 @@ function App() {
         <Routes>
           <Route path="app" element={<QRpage />} />
           <Route path="app/payment/:id" element={<PaymentPage isInside />} />
+          {/* Если сканируют с авторизованным профилем */}
+          <Route path="/payment/:id" element={<PaymentPage isInside />} />
           <Route path="withdrawal" element={<WithdrawalPage />} />
           <Route path="transactions" element={<TransactionsPage />} />
           <Route

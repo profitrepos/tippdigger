@@ -36,7 +36,7 @@ export const QRpage = () => {
             </h2>
             <div className={styles.qr_code}>
               <QRCode
-                value={`http://192.168.10.21:3000/payment/${userData.id}`}
+                value={`https://bektemirovkam.github.io/tippdigger/#/payment/${userData.id}`}
                 size={240}
               />
               {/* <span>700-413-020</span> */}
