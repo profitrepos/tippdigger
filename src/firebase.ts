@@ -10,9 +10,13 @@ import {
   where,
   getDocs,
   doc,
+  setDoc,
+  arrayUnion,
+  updateDoc,
+  increment,
 } from "firebase/firestore";
 
-import { IRegistrationForm, IUser } from "./models/User";
+import { IRegistrationForm, ITransactionsItem, IUser } from "./models/User";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPJNRHa8ZDp4yM-eB22TDuzgcEYOmJAXs",
@@ -84,6 +88,13 @@ export const DB = {
     const docSnap = await getDoc(docRef);
 
     return docSnap;
+  },
+  addTransaction: async (id: string, transaction: ITransactionsItem) => {
+    const docRef = doc(db, "users", id);
+    return updateDoc(docRef, {
+      balance: increment(Number(transaction.sum)),
+      transactions: arrayUnion(transaction),
+    });
   },
 };
 

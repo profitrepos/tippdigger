@@ -1,13 +1,14 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { CustomRadio, Header, Transaction } from "../../components";
+import { useAppSelector } from "../../hooks/redux";
 import { ITransactionsItem } from "../../models/User";
+import { selectUserData } from "../../store/user/userSlice";
 
 import styles from "./TransactionsPage.module.scss";
 
 interface ICustomRadio {
   label: string;
   id: string;
-  checked?: boolean;
 }
 
 interface ITransactions {
@@ -99,8 +100,11 @@ const testTransactions: ITransactions = {
 };
 
 export const TransactionsPage = () => {
+  const [filterValue, setFilterValue] = useState("Today");
+  const userData = useAppSelector(selectUserData);
+
   const onFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("onFilterChange --> ", e.target.value);
+    setFilterValue(e.target.value);
   };
 
   return (
@@ -117,20 +121,23 @@ export const TransactionsPage = () => {
               className={styles.filter_item}
               value={filter.label}
               onChange={onFilterChange}
+              checked={filter.label === filterValue}
             />
           );
         })}
       </div>
-      {Object.keys(testTransactions).map((period) => {
-        return (
-          <div key={period} className={styles.period_box}>
-            <span className={styles.period_title}>{period}</span>
-            {testTransactions[period].map((transaction) => {
-              return <Transaction key={transaction.id} {...transaction} />;
-            })}
-          </div>
-        );
-      })}
+      {userData &&
+        userData.transactions.length > 0 &&
+        Object.keys(testTransactions).map((period) => {
+          return (
+            <div key={period} className={styles.period_box}>
+              <span className={styles.period_title}>{period}</span>
+              {userData.transactions.map((transaction) => {
+                return <Transaction key={transaction.id} {...transaction} />;
+              })}
+            </div>
+          );
+        })}
     </div>
   );
 };

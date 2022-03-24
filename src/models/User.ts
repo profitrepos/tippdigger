@@ -1,4 +1,5 @@
 import { HTMLInputTypeAttribute } from "react";
+import { OrderResponseBody } from "@paypal/paypal-js/types";
 
 export interface ITransactionsItem {
   type: "withdraw" | "receipt";
@@ -6,6 +7,11 @@ export interface ITransactionsItem {
   sum: string | number;
   senderName?: string;
   id: string;
+}
+
+export interface ISaveTransaction {
+  recepientId: string;
+  transaction: OrderResponseBody;
 }
 
 export interface IUser {

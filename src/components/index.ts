@@ -12,3 +12,5 @@ export * from "./ProfileLink/ProfileLink";
 export * from "./Counter/Counter";
 export * from "./StarRating/StarRating";
 export * from "./Preloader/Preloader";
+export * from "./PaymentButtons/PaymentButtons";
+export * from "./PaymentForm/PaymentForm";

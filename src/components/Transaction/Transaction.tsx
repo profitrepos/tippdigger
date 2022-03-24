@@ -4,6 +4,7 @@ import cn from "classnames";
 import { ReactComponent as UserIcon } from "./icons/user.svg";
 import { ReactComponent as WithDrawIcon } from "./icons/withdraw.svg";
 import styles from "./Transaction.module.scss";
+import { formatAMPM } from "../../utils/formatter";
 
 interface TransactionProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -28,7 +29,7 @@ export const Transaction: FC<TransactionProps> = ({
         </div>
         <div className={styles.info}>
           <span className={styles.sender_name}>{senderName}</span>
-          <span className={styles.time}>{time}</span>
+          <span className={styles.time}>{formatAMPM(new Date(time))}</span>
         </div>
       </div>
       <div

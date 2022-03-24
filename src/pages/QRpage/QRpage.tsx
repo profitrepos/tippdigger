@@ -39,8 +39,8 @@ export const QRpage = () => {
                 value={`http://192.168.10.21:3000/payment/${userData.id}`}
                 size={240}
               />
-              <span>700-413-020</span>
-              {/* <span>{userData.id}</span> */}
+              {/* <span>700-413-020</span> */}
+              <span>{userData.id}</span>
             </div>
             <Link to={`payment/${userData.id}`} className={styles.payment_link}>
               Go to payment page

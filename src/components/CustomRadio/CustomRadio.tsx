@@ -19,6 +19,7 @@ interface CustomRadioProps
   value: string | number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   labelClass?: string;
+  checked?: boolean;
 }
 
 export const CustomRadio: FC<CustomRadioProps> = ({

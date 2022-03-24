@@ -1,4 +1,9 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, {
+  DetailedHTMLProps,
+  FC,
+  HTMLAttributes,
+  SyntheticEvent,
+} from "react";
 import MaskInput from "react-input-mask";
 
 import { ReactComponent as PlusIcon } from "./icons/plus.svg";
@@ -10,32 +15,35 @@ import { CustomRadio } from "../CustomRadio/CustomRadio";
 
 const values = [10, 15, 20, 25, 30];
 
-export const Counter = () => {
-  const [count, setCount] = useState(15);
+interface CounterProps
+  extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  setValue: (value: number) => void;
+  value: number;
+}
 
+export const Counter: FC<CounterProps> = ({ setValue, value, ...props }) => {
   const onChange = (e: SyntheticEvent<Element, Event>) => {
     //@ts-ignore
     if (!isNaN(parseFloat(e.target.value))) {
       //@ts-ignore
-      setCount(parseFloat(e.target.value));
+      setValue(parseFloat(e.target.value));
     }
   };
 
   const increase = () => {
-    setCount((prev) => prev + 5);
+    setValue(value + 5);
   };
 
   const decrease = () => {
-    setCount((prev) => {
-      if (prev - 5 <= 0) {
-        return 0;
-      }
-      return prev - 5;
-    });
+    if (value - 5 <= 0) {
+      setValue(0);
+    } else {
+      setValue(value - 5);
+    }
   };
 
   return (
-    <div className={styles.counter}>
+    <div className={styles.counter} {...props}>
       <div className={styles.counter_top}>
         <Button className={styles.btn} onClick={increase}>
           <PlusIcon />
@@ -45,7 +53,7 @@ export const Counter = () => {
           className={styles.input}
           mask={[/^\d+\s/, " €"]}
           onChange={onChange}
-          value={`${count} €`}
+          value={`${value} €`}
           alwaysShowMask
         />
         <Button className={styles.btn} onClick={decrease}>
@@ -64,7 +72,7 @@ export const Counter = () => {
               labelClass={styles.label}
               value={val}
               onChange={onChange}
-              defaultChecked={val === count}
+              defaultChecked={val === value}
             />
           );
         })}

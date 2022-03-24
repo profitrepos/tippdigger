@@ -1,21 +1,15 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import cn from "classnames";
 import { Link, useParams } from "react-router-dom";
+import { OrderResponseBody } from "@paypal/paypal-js/types";
 
-import bank from "../../assets/images/deutsche_bank.png";
-import {
-  Avatar,
-  Button,
-  Counter,
-  Header,
-  Preloader,
-  StarRating,
-} from "../../components";
-import { ReactComponent as ApplePayIcon } from "./icons/apple_pay.svg";
-import { ReactComponent as CreditCardIcon } from "./icons/credit_card.svg";
-import { ReactComponent as GooglePayIcon } from "./icons/google_pay.svg";
+import { Header, PaymentForm, Preloader } from "../../components";
+// import { ReactComponent as ApplePayIcon } from "./icons/apple_pay.svg";
+// import { ReactComponent as CreditCardIcon } from "./icons/credit_card.svg";
+// import { ReactComponent as GooglePayIcon } from "./icons/google_pay.svg";
 import {
   getRecepient,
+  saveTransaction,
   selectRecipientData,
   selectRecipientError,
   selectRecipientLoading,
@@ -29,6 +23,8 @@ interface PaymentPageProps {
 }
 
 export const PaymentPage: FC<PaymentPageProps> = ({ isInside }) => {
+  const [paid, setPaid] = useState(false);
+
   const recipient = useAppSelector(selectRecipientData);
   const recipientLoading = useAppSelector(selectRecipientLoading);
   const recipientError = useAppSelector(selectRecipientError);
@@ -41,6 +37,20 @@ export const PaymentPage: FC<PaymentPageProps> = ({ isInside }) => {
       dispatch(getRecepient(id));
     }
   }, [dispatch, id]);
+
+  const handleApprove = (order?: OrderResponseBody) => {
+    console.log("recipient.id ---> ", recipient?.id);
+    if (recipient && order) {
+      dispatch(
+        saveTransaction({ recepientId: recipient.id, transaction: order })
+      );
+      setPaid(true);
+    }
+  };
+
+  const handleError = (err: Record<string, unknown>) => {
+    console.log("error ---> ", err);
+  };
 
   if (recipientLoading) {
     return <Preloader />;
@@ -56,29 +66,17 @@ export const PaymentPage: FC<PaymentPageProps> = ({ isInside }) => {
       {recipientError && <span className={styles.error}>{recipientError}</span>}
       {recipient && (
         <div className={styles.body}>
-          <div className={styles.body_top}>
-            <Avatar size="large" />
-            <span>{`${recipient.firstName} ${recipient.lastName}`}</span>
-          </div>
-          <h2 className={styles.title}>Leave a tip</h2>
-          <Counter />
-          <h3 className={styles.subtitle}>Rate Service</h3>
-          <StarRating />
-          <div className={styles.methods}>
-            <Button appearance="ghost" className={styles.method_btn}>
-              <ApplePayIcon />
-            </Button>
-            <Button appearance="ghost" className={styles.method_btn}>
-              <GooglePayIcon />
-            </Button>
-            <Button appearance="ghost" className={styles.method_btn}>
-              <CreditCardIcon />
-            </Button>
-          </div>
-          <div className={styles.body_bottom}>
-            <span>Payments go through</span>
-            <img src={bank} alt="Deutsche Bank" />
-          </div>
+          {paid ? (
+            <div className={styles.success}>
+              <span>Your payment was processed successfully</span>
+            </div>
+          ) : (
+            <PaymentForm
+              recipient={recipient}
+              handleApprove={handleApprove}
+              handleError={handleError}
+            />
+          )}
         </div>
       )}
       <div className={styles.footer}>

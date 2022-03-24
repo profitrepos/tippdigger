@@ -1,6 +1,11 @@
-import { RootState } from "./../store";
-import { IUser } from "./../../models/User";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { RootState } from "./../store";
+import {
+  ISaveTransaction,
+  ITransactionsItem,
+  IUser,
+} from "./../../models/User";
 
 import { DB } from "../../firebase";
 
@@ -23,12 +28,31 @@ export const getRecepient = createAsyncThunk(
       const findResp = await DB.getUserById(id);
 
       if (findResp.exists()) {
-        return findResp.data();
+        return { ...findResp.data(), id: findResp.id };
       } else {
         thunkAPI.rejectWithValue("Пользователь не найден");
       }
     } catch (error) {
       thunkAPI.rejectWithValue("Ошибка авторизации");
+    }
+  }
+);
+
+export const saveTransaction = createAsyncThunk(
+  "app/saveTransaction",
+  async (formData: ISaveTransaction, thunkAPI) => {
+    try {
+      const transtaction: ITransactionsItem = {
+        type: "receipt",
+        time: formData.transaction.create_time,
+        sum: formData.transaction.purchase_units[0].amount.value,
+        senderName: formData.transaction.payer.email_address,
+        id: formData.transaction.id,
+      };
+
+      await DB.addTransaction(formData.recepientId, transtaction);
+    } catch (e) {
+      thunkAPI.rejectWithValue("Не удалось сохранить транзакцию");
     }
   }
 );
